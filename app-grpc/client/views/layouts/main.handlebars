@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo</title>
+  <style>
+    .todo-item {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+  {{{body}}}
+
+  <script src="https://unjavascripter.github.io/dc-elements/dc-elements/checkbox/checkbox.js"></script>
+  <script>
+    const todoFormElem = document.getElementById('todo-form');
+    const checkboxElems = document.getElementsByTagName('dc-checkbox');
+
+    todoFormElem.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.target);
+      const label = formData.get("todo");
+      updateTodo({
+        label,
+        display: true,
+        done: false
+      });
+    });
+
+
+    for (let checkbox of checkboxElems) {
+      checkbox.addEventListener('change', e => {
+        const todo = {
+          id: e.target.id,
+          label: e.target.getAttribute('label-text'),
+          done: e.target.checked,
+          display: e.target.getAttribute('display') === 'true',
+        }
+        updateTodo(todo);
+      });
+    }
+
+    async function updateTodo(todo) {
+      const headers = new Headers();
+      headers.append('content-type', 'application/json');
+      try {
+        const req = await fetch('/update-todos', {
+          method: 'POST',
+          headers,
+          body: JSON.stringify(todo),
+        });
+        console.log(await req.json())
+        window.location.reload();
+      } catch {
+        console.log('POST err');
+      }
+      
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "pb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.4.4",
+    "@grpc/proto-loader": "^0.6.7",
+    "async": "^3.2.2",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-handlebars": "^6.0.2",
+    "google-protobuf": "^3.19.1",
+    "lodash": "^4.17.21",
+    "minimist": "^1.2.5",
+    "mongodb": "^4.2.0",
+    "node-fetch": "^2.6.6"
+  }
+}

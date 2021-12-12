@@ -1,0 +1,43 @@
+---
+  - name: Set up epaper pis
+    hosts: pi_epaper
+    gather_facts: no
+    remote_user: root
+    tasks:
+      - name: Enable SPI
+        become: yes
+        lineinfile:
+          path: /boot/config.txt
+          search_string: "#dtparam=spi=on"
+          line: dtparam=spi=on
+          state: present
+      - name: Install APT packages
+        become: yes
+        apt:
+          pkg:
+          - python3-pip
+          - libopenjp2-7
+          state: present 
+      - name: Install RPi.GPIO python package
+        pip:
+          name: RPi.GPIO
+          executable: pip3
+      - name: Install spidev python package
+        pip:
+          name: spidev
+          executable: pip3
+      - name: Install Pillow python package
+        pip:
+          name: Pillow
+          executable: pip3
+      - name: Install numpy python package
+        pip:
+          name: numpy
+          executable: pip3
+      - name: Install Flask python package
+        pip:
+          name: Flask
+          executable: pip3
+      - name: Unconditionally reboot the machine with all defaults
+        become: yes
+        reboot:

@@ -1,0 +1,47 @@
+services:
+  todo-client:
+    build: 
+      context: .
+      dockerfile: ./client/Dockerfile
+    container_name: todo-client
+    networks:
+      - todonet
+    environment:
+      - WAIT_HOSTS=todo-server:50051
+      - PORT=6676
+      - SERVER_ADDRESS=todo-server:50051
+    ports:
+      - 6676:6676
+    depends_on:
+      - todo-server
+  todo-server:
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
+    container_name: todo-server
+    networks:
+      - todonet
+    environment:
+      - MONGO_CONN=mongodb://admin:admin@mongo
+      - DISPLAY_ADDRESS=http://rpi0epaper:5000/
+    depends_on:
+      - mongo
+    ports:
+      - 50051:50051
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: admin
+    networks:
+      - todonet
+    ports:
+      - 27017:27017
+    restart: always
+    logging:
+      driver: none
+
+networks:
+  todonet:
+    driver: bridge

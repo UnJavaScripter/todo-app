@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+// import "google/protobuf/empty.proto";
+
+package todoapp;
+
+message EmptyValue {}
+
+
+// The greeting service definition.
+service Todo {
+  // Sends a greeting
+  rpc AddTodo (Item) returns (Item);
+  rpc GetTodos (EmptyValue) returns (ItemList);
+  rpc GetTodosStream(EmptyValue) returns (stream Item);
+
+}
+
+// The request message containing the user's name.
+message Item {
+  string id = 1;
+  string label = 2;
+  bool done = 3;
+  bool display = 4;
+}
+
+// The response message containing the greetings
+message ItemList {
+  repeated Item items = 1;
+}

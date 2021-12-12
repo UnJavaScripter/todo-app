@@ -1,0 +1,28 @@
+<section>
+  <form id="todo-form">
+    <input type="text" name="todo" autofocus>
+    <button type="submit">Add</button>
+  </form>
+</section>
+
+<section>
+  <ul class="todo-list">
+    {{#each todosArr}}
+    {{#if this.display}}
+    <li>
+      <div class="todo-item">
+        <dc-checkbox
+          id="{{this.id}}"
+          label-text="{{this.label}}"
+          checked="{{this.done}}"
+          display="{{this.display}}"
+          box-position="left"
+        >
+        </dc-checkbox>
+        <button onclick='updateTodo({"id": "{{this.id}}", "label": "{{this.label}}", "done": {{this.done}}, "display": false })'>ⓧ</button>
+      </div>
+    </li>
+    {{/if}}
+    {{/each}}
+  </ul>
+</section>
